@@ -1,0 +1,28 @@
+{
+  "name": "sdk",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/payment-sdk.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
+    "serve": "vite"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@types/qrcode": "^1.5.5",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "eslint": "^9.26.0",
+    "rollup": "^4.40.2",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

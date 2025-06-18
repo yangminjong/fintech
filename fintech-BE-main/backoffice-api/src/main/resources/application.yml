@@ -1,0 +1,80 @@
+spring:
+  config:
+    activate:
+      on-profile: testing
+  datasource:
+    url: jdbc:postgresql://34.64.149.32:5432/testdb
+    username: testuser
+    password: testpass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    packages-to-scan:
+      - com.fastcampus.backoffice.entity
+      - com.fastcampus.payment.entity
+      - com.fastcampus.paymentmethod.entity
+  data:
+    redis:
+      host: 34.64.149.32
+      port: 6379
+      password: fintechpass
+  application:
+    name: backoffice-api
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+jwt:
+  secret: dYVzdC1zZWNyZXQta2V5LXlvdS2jYW4tY2hhbmdlPXRoaXM=
+  expiration: 86400000 # 24 hours in milliseconds 
+
+# Actuator 설정 추가
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+  security:
+    enabled: false
+
+---
+# 기본 프로파일 설정
+spring:
+  datasource:
+    url: jdbc:postgresql://34.64.149.32:5432/testdb
+    username: testuser
+    password: testpass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    redis:
+      host: 34.64.149.32
+      port: 6379
+  application:
+    name: backoffice-api
+
+jwt:
+  secret: dYVzdC1zZWNyZXQta2V5LXlvdS2jYW4tY2hhbmdlPXRoaXM=
+  expiration: 86400000 # 24 hours in milliseconds 

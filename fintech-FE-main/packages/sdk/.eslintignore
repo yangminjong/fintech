@@ -1,0 +1,8 @@
+node_modules/
+dist/
+public/
+.vscode/
+.gitignore
+.eslintrc.json
+.eslintignore
+.prettierrc

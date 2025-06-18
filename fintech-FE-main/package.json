@@ -1,0 +1,9 @@
+{
+  "name": "passion-pay-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "demo": "pnpm --filter demo run",
+    "sdk": "pnpm --filter sdk run"
+  }
+}
