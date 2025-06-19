@@ -5,6 +5,7 @@ import com.fastcampus.payment.dto.PaymentExecutionResponse;
 import com.fastcampus.payment.dto.PaymentExecutionRequest;
 import com.fastcampus.payment.entity.Payment;
 import com.fastcampus.payment.entity.PaymentStatus;
+import com.fastcampus.payment.entity.Transaction;
 import com.fastcampus.payment.repository.*;
 import com.fastcampus.payment.service.PaymentExecutionService;
 
@@ -59,11 +60,11 @@ class PaymentExecutionServiceImplTest {
             return mock(Object.class);
         }
 
-//        @Bean("redisTemplate")
-//        @Primary
-//        public org.springframework.data.redis.core.RedisTemplate<String, Transaction> redisTemplate() {
-//            return mock(org.springframework.data.redis.core.RedisTemplate.class);
-//        }
+        @Bean("redisTemplate")
+        @Primary
+        public org.springframework.data.redis.core.RedisTemplate<String, Transaction> redisTemplate() {
+            return mock(org.springframework.data.redis.core.RedisTemplate.class);
+        }
     }
 
     @Autowired
