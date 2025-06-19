@@ -41,30 +41,16 @@ import static org.mockito.Mockito.*;
         "spring.datasource.password=",
         "spring.jpa.hibernate.ddl-auto=create-drop",
         "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
-        "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration",
+        "spring.data.redis.host=localhost",
+        "spring.data.redis.port=6379",
+        "spring.data.redis.database=1",
         "spring.main.allow-bean-definition-overriding=true"
 })
 class PaymentExecutionServiceImplTest {
 
     @TestConfiguration
     static class TestConfig {
-        @Bean
-        @Primary
-        public TransactionRepositoryRedis transactionRepositoryRedis() {
-            return mock(TransactionRepositoryRedis.class);
-        }
-
-        @Bean
-        @Primary
-        public Object redisTransactionRepository() {
-            return mock(Object.class);
-        }
-
-        @Bean("redisTemplate")
-        @Primary
-        public org.springframework.data.redis.core.RedisTemplate<String, Transaction> redisTemplate() {
-            return mock(org.springframework.data.redis.core.RedisTemplate.class);
-        }
+        // Redis Mock 제거 - 실제 Redis 사용
     }
 
     @Autowired
