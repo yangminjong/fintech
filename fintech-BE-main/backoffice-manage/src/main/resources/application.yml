@@ -17,9 +17,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
-      host: localhost
+      host: 34.47.96.158
       port: 6379
-      password: fintechhost
+      password: fintechpass
   application:
     name: backoffice-manage
 
@@ -65,7 +65,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
-      host: localhost
+      host: 34.47.96.158
       port: 6379
       password: fintechpass
   application:

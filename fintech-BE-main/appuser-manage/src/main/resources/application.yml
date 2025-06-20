@@ -18,7 +18,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: 34.47.96.158
       port: 6379
       password: fintechpass
 
