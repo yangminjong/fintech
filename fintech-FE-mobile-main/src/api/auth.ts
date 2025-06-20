@@ -1,24 +1,78 @@
-type User = {
+import { ApiClient, API_ENDPOINTS } from './config';
+
+export type User = {
   name: string;
   phone: string;
   email: string;
   password: string;
 };
 
-const users: User[] = [{ name: 'a', phone: '010-1234-5678', email: 'a@a.a', password: 'a' }];
+export type LoginResponse = {
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type RegisterResponse = {
+  userId: number;
+  email: string;
+  name: string;
+  status: string;
+};
+
+export type UserInfo = {
+  email: string;
+  name: string;
+  phone: string;
+  status: string;
+};
 
 export const auth = {
-  login: (email: string, password: string): User | undefined => {
-    const found = users.find((u) => u.email === email && u.password === password);
-    return found;
+  login: async (email: string, password: string): Promise<LoginResponse> => {
+    const response = await ApiClient.post<LoginResponse>(API_ENDPOINTS.AUTH.LOGIN, {
+      email,
+      password,
+    });
+    
+    // 토큰을 로컬 스토리지에 저장
+    localStorage.setItem('accessToken', response.accessToken);
+    localStorage.setItem('refreshToken', response.refreshToken);
+    
+    return response;
   },
 
-  register: (user: User): Promise<boolean> => {
-    return new Promise((resolve) => {
-      const exists = users.some((u) => u.email === user.email);
-      if (exists) return resolve(false);
-      users.push(user);
-      setTimeout(() => resolve(true), 500);
+  register: async (user: User): Promise<RegisterResponse> => {
+    return ApiClient.post<RegisterResponse>(API_ENDPOINTS.AUTH.REGISTER, user);
+  },
+
+  logout: async (): Promise<void> => {
+    await ApiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  },
+
+  getUserInfo: async (): Promise<UserInfo> => {
+    return ApiClient.get<UserInfo>(API_ENDPOINTS.AUTH.INFO);
+  },
+
+  refreshToken: async (): Promise<LoginResponse> => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+    
+    const response = await fetch(`${API_ENDPOINTS.AUTH.REFRESH}`, {
+      method: 'POST',
+      headers: {
+        'Refresh-Token': `Bearer ${refreshToken}`,
+      },
     });
+
+    if (!response.ok) {
+      throw new Error('Token refresh failed');
+    }
+
+    const data = await response.json();
+    localStorage.setItem('accessToken', data.accessToken);
+    return data;
   },
 };

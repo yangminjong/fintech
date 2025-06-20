@@ -3,7 +3,7 @@ spring:
     activate:
       on-profile: testing
   datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
+    url: jdbc:postgresql://34.47.96.158:5432/testdb
     username: testuser
     password: testpass
     driver-class-name: org.postgresql.Driver
@@ -51,7 +51,7 @@ management:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
+    url: jdbc:postgresql://34.47.96.158:5432/testdb
     username: testuser
     password: testpass
     driver-class-name: org.postgresql.Driver

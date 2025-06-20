@@ -13,13 +13,14 @@ const SignUp = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await auth.register({ name, phone, email, password });
-
-    if (success) {
-      alert('가입 성공!');
+    
+    try {
+      await auth.register({ name, phone, email, password });
+      alert('회원가입 성공!');
       navigate('/login');
-    } else {
-      alert('가입 실패!');
+    } catch (error) {
+      console.error('Registration failed:', error);
+      alert('회원가입 실패! 입력 정보를 확인해주세요.');
     }
   };
 

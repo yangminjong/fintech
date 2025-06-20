@@ -1,3 +1,5 @@
+import { ApiClient, API_ENDPOINTS } from './config';
+
 export type CardForm = {
   cardNumber: string;
   expiry: string;
@@ -7,31 +9,47 @@ export type CardForm = {
   paymentPassword: string;
 };
 
-export const cardInfos: CardForm[] = [
-  {
-    cardNumber: '1234123412341234',
-    expiry: '0526',
-    birth: '990113',
-    password2Digits: '12',
-    cvc: '123',
-    paymentPassword: '123456',
-  },
-  {
-    cardNumber: '5678567856785678',
-    expiry: '1225',
-    birth: '990113',
-    password2Digits: '12',
-    cvc: '123',
-    paymentPassword: '111111',
-  },
-];
+export type CardResponse = {
+  cardToken: string;
+  maskedCardNumber: string;
+  cardCompany: string;
+  cardType: string;
+  expiryDate: string;
+  createdAt: string;
+};
+
+export type CardRegisterRequest = {
+  cardNumber: string;
+  expiryDate: string;
+  birthDate: string;
+  cardPw: string;
+  cvc: string;
+  paymentPassword: string;
+};
 
 export const card = {
-  register: (card: CardForm) => {
-    cardInfos.push(card);
+  register: async (cardForm: CardForm): Promise<void> => {
+    const request: CardRegisterRequest = {
+      cardNumber: cardForm.cardNumber,
+      expiryDate: cardForm.expiry,
+      birthDate: cardForm.birth,
+      cardPw: cardForm.password2Digits,
+      cvc: cardForm.cvc,
+      paymentPassword: cardForm.paymentPassword,
+    };
+
+    return ApiClient.post(API_ENDPOINTS.CARDS.REGISTER, request);
   },
 
-  get: (cardNumber: string) => {
-    return cardInfos.find((c) => c.cardNumber == cardNumber);
+  getAll: async (): Promise<CardResponse[]> => {
+    return ApiClient.get<CardResponse[]>(API_ENDPOINTS.CARDS.LIST);
+  },
+
+  get: async (cardToken: string): Promise<CardResponse> => {
+    return ApiClient.get<CardResponse>(API_ENDPOINTS.CARDS.DETAIL(cardToken));
+  },
+
+  delete: async (cardToken: string): Promise<void> => {
+    return ApiClient.delete(API_ENDPOINTS.CARDS.DELETE(cardToken));
   },
 };

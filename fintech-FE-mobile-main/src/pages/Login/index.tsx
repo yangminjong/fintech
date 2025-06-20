@@ -17,14 +17,19 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = auth.login(email, password);
-
-    if (user) {
-      setUser({ email: user.email, name: user.name });
-      alert('login 성공!');
+    
+    try {
+      const response = await auth.login(email, password);
+      
+      // 사용자 정보를 가져와서 스토어에 저장
+      const userInfo = await auth.getUserInfo();
+      setUser({ email: userInfo.email, name: userInfo.name });
+      
+      alert('로그인 성공!');
       navigate('/', { replace: true });
-    } else {
-      alert('login 실패!');
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('로그인 실패! 이메일과 비밀번호를 확인해주세요.');
     }
   };
 
